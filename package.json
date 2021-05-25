@@ -1,5 +1,5 @@
 {
-  "name": "@codetrix-studio/capacitor-google-auth",
+  "name": "@resler/capacitor-google-auth",
   "version": "2.1.3",
   "description": "Google Auth plugin for capacitor.",
   "main": "dist/esm/index.js",
@@ -14,7 +14,7 @@
   "author": "CodetrixStudio",
   "license": "MIT",
   "dependencies": {
-    "@capacitor/core": "^3.0.0"
+    "@capacitor/core": "^3.0.0-beta.2"
   },
   "devDependencies": {
     "@capacitor/android": "3.0.0",
