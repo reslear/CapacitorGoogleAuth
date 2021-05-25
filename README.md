@@ -24,20 +24,23 @@ Register the plugin by importing it.
 
 ```ts
 import '@reslear/capacitor-google-auth'
+
+// or dynamically import for webpack, vue-cli
+import('@reslear/capacitor-google-auth')
 ```
 
 Use it
 
 ```ts
-import { Plugins } from '@capacitor/core'
-Plugins.GoogleAuth.signIn()
+import { GoogleAuth } from '@reslear/capacitor-google-auth'
+GoogleAuth.signIn()
 ```
 
 ### AngularFire2
 
 ```ts
 async googleSignIn() {
-  let googleUser = await Plugins.GoogleAuth.signIn();
+  let googleUser = await GoogleAuth.signIn();
   const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
   return this.afAuth.auth.signInAndRetrieveDataWithCredential(credential);
 }
