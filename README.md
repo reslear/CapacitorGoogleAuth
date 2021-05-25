@@ -1,5 +1,7 @@
 # CapacitorGoogleAuth
 
+⚠️ this is fork - temporal solution for support capacitor 3
+
 Capacitor plugin for Google Auth.
 
 ### Install
