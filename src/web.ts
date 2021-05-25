@@ -136,7 +136,9 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
   }
 }
 
-const GoogleAuth = registerPlugin('GoogleAuth', { web: new GoogleAuthWeb() });
+const GoogleAuth = registerPlugin<GoogleAuthPlugin>('GoogleAuth', {
+  web: new GoogleAuthWeb(),
+})
 
 export { GoogleAuth };
 

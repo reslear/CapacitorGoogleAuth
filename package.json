@@ -1,6 +1,6 @@
 {
   "name": "@reslear/capacitor-google-auth",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.3",
   "description": "Google Auth plugin for capacitor.",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -27,7 +27,7 @@
     "dist/",
     "ios/",
     "android/",
-    "CodetrixStudioCapacitorGoogleAuth.podspec"
+    "ReslearCapacitorGoogleAuth.podspec"
   ],
   "keywords": [
     "capacitor",
