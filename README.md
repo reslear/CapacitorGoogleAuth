@@ -2,11 +2,13 @@
 
 Capacitor plugin for Google Auth.
 
-> ⚠️ This is fork original plugin [@codetrix-studio/capacitor-google-auth](https://github.com/CodetrixStudio/CapacitorGoogleAuth) as temporally solution for support **Capacitor 3**
+> ⚠️ This is fork original plugin [@codetrix-studio/capacitor-google-auth](https://github.com/CodetrixStudio/CapacitorGoogleAuth) with new beta features, changes or experiments
 
-fork features:
+fork changes:
 
-- [ x ] feature
+- [ x ] [#112](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/112) - bump deps, init peer dependencies
+- [ x ] [#113](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/113) - protect add duplicate script
+- [ x ] [#114](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/114) - add support `.ts` and `.js` config
 
 ### Install
 
