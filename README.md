@@ -23,8 +23,12 @@ Register plugin and manually initialize
 ```ts
 import { GoogleAuth } from '@reslear/capacitor-google-auth'
 
-GoogleAuth.init()
+GoogleAuth.init({
+  scopes: ["profile", "email"],
+  offline: true
+})
 ```
+> see `init` method options - descriptions, examples, default values and types in `definition.ts`
 
 Use it
 
