@@ -1,57 +1,57 @@
 import { WebPlugin } from '@capacitor/core';
-import { GoogleAuthPlugin, GoogleAuthPluginOptionsWeb } from './definitions';
-import { User, Authentication } from './user';
+import { Authentication, GoogleAuthPlugin, InitOptions, User } from './definitions';
 
 export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
-
   gapiLoaded: Promise<void>;
-  options: GoogleAuthPluginOptionsWeb = {
-    offline: false,
-    scopes: []
-  }
-
-  get webConfigured(): boolean {
-    if (typeof document !== 'undefined') {
-      return document.getElementsByName('google-signin-client_id').length > 0;
-    } else {
-      return false;
-    }
-  }
+  options: InitOptions;
 
   constructor() {
     super();
   }
 
   loadScript() {
-    const scriptId = 'gapi'
-    const scriptEl = document?.getElementById(scriptId)
-    
-    if (scriptEl) {
-      return
+    if (typeof document === 'undefined') {
+      return;
     }
 
-    var head = document.getElementsByTagName('head')[0]
-    var script = document.createElement('script')
-    
+    const scriptId = 'gapi';
+    const scriptEl = document?.getElementById(scriptId);
+
+    if (scriptEl) {
+      return;
+    }
+
+    const head = document.getElementsByTagName('head')[0];
+    const script = document.createElement('script');
+
     script.type = 'text/javascript';
     script.defer = true;
     script.async = true;
-    script.id = scriptId
+    script.id = scriptId;
     script.onload = this.platformJsLoaded;
     script.src = 'https://apis.google.com/js/platform.js';
     head.appendChild(script);
   }
 
-  init(_options?: Partial<GoogleAuthPluginOptionsWeb>){
-    if (!this.webConfigured) {
-      return
+  init(_options?: Partial<InitOptions>) {
+    if (typeof window === 'undefined') {
+      return;
     }
 
-    if(_options) {
-      this.options = {..._options, ...this.options}
+    const metaClientId = (document.getElementsByName('google-signin-client_id')[0] as any).content;
+    const client_id = _options.client_id || metaClientId || '';
+
+    if (!client_id) {
+      console.warn('GoogleAuthPlugin - client_id is empty');
     }
 
-    this.gapiLoaded = new Promise(resolve => {
+    this.options = {
+      client_id,
+      grantOfflineAccess: _options.grantOfflineAccess ?? false,
+      scopes: _options.scopes || [],
+    };
+
+    this.gapiLoaded = new Promise((resolve) => {
       // HACK: Relying on window object, can't get property in gapi.load callback
       (window as any).gapiResolve = resolve;
       this.loadScript();
@@ -63,7 +63,7 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
   platformJsLoaded() {
     gapi.load('auth2', () => {
       const clientConfig: gapi.auth2.ClientConfig = {
-        client_id: (document.getElementsByName('google-signin-client_id')[0] as any).content
+        client_id: this.options.client_id,
       };
 
       if (this.options.scopes.length) {
@@ -75,17 +75,11 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
     });
   }
 
-  async signIn(): Promise<any> {
-    return new Promise(async (resolve, reject) => {
+  async signIn() {
+    return new Promise<User>(async (resolve, reject) => {
       try {
-        var serverAuthCode: string;
-        var needsOfflineAccess = false;
-
-        try {
-          needsOfflineAccess = this.options.offline
-        } catch {
-
-        }
+        let serverAuthCode: string;
+        const needsOfflineAccess = this.options.grantOfflineAccess ?? false;
 
         if (needsOfflineAccess) {
           const offlineAccessResponse = await gapi.auth2.getAuthInstance().grantOfflineAccess();
@@ -110,26 +104,26 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
     });
   }
 
-  async refresh(): Promise<Authentication> {
-    const authResponse = await gapi.auth2.getAuthInstance().currentUser.get().reloadAuthResponse()
+  async refresh() {
+    const authResponse = await gapi.auth2.getAuthInstance().currentUser.get().reloadAuthResponse();
     return {
       accessToken: authResponse.access_token,
-      idToken: authResponse.id_token
-    }
+      idToken: authResponse.id_token,
+    };
   }
 
-  async signOut(): Promise<any> {
+  async signOut() {
     return gapi.auth2.getAuthInstance().signOut();
   }
 
   private async addUserChangeListener() {
     await this.gapiLoaded;
-    gapi.auth2.getAuthInstance().currentUser.listen(googleUser => {
-      this.notifyListeners("userChange", googleUser.isSignedIn() ? this.getUserFrom(googleUser) : null);
+    gapi.auth2.getAuthInstance().currentUser.listen((googleUser) => {
+      this.notifyListeners('userChange', googleUser.isSignedIn() ? this.getUserFrom(googleUser) : null);
     });
   }
 
-  private getUserFrom(googleUser: gapi.auth2.GoogleUser): User {
+  private getUserFrom(googleUser: gapi.auth2.GoogleUser) {
     const user = {} as User;
     const profile = googleUser.getBasicProfile();
 
@@ -143,8 +137,8 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
     const authResponse = googleUser.getAuthResponse(true);
     user.authentication = {
       accessToken: authResponse.access_token,
-      idToken: authResponse.id_token
-    }
+      idToken: authResponse.id_token,
+    };
 
     return user;
   }
