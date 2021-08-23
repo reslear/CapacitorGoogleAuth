@@ -1,5 +1,5 @@
 import { WebPlugin } from '@capacitor/core';
-import { Authentication, GoogleAuthPlugin, InitOptions, User } from './definitions';
+import { GoogleAuthPlugin, InitOptions, User } from './definitions';
 
 export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
   gapiLoaded: Promise<void>;
