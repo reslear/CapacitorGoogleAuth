@@ -6,9 +6,8 @@ Capacitor plugin for Google Auth.
 
 fork changes:
 
-- [ x ] [#112](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/112) - bump deps, init peer dependencies
-- [ x ] [#113](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/113) - protect add duplicate script
 - [ x ] [#114](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/114) - add support `.ts` and `.js` config
+- [ x ] [#136](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/136) - Update ios to GoogleSignIn 6.0.1 Pod
 
 ### Install
 
@@ -23,19 +22,21 @@ npx cap sync
 Register plugin and manually initialize
 
 ```ts
-import { GoogleAuth } from '@reslear/capacitor-google-auth'
+import { GoogleAuth } from '@reslear/capacitor-google-auth';
 
 GoogleAuth.init({
-  scopes: ["profile", "email"],
-  offline: true
-})
+  client_id: 'xxxxxx-xxxxxxxxxxxxxxxxxx.apps.googleusercontent.com',
+  scopes: ['profile', 'email'],
+  grantOfflineAccess: true,
+});
 ```
+
 > see `init` method options - descriptions, examples, default values and types in `definition.ts`
 
 Use it
 
 ```ts
-GoogleAuth.signIn()
+GoogleAuth.signIn();
 ```
 
 ### Config, IOS, ANDROID and etc..
