@@ -26,7 +26,7 @@ export interface Authentication {
   /**
    * refreshToken only for iOS and Android
    */
-  refreshToken?: string;
+  refreshToken: string;
 }
 
 export interface GoogleAuthPluginOptions {
