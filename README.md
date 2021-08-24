@@ -24,7 +24,7 @@ Register plugin and manually initialize
 ```ts
 import { GoogleAuth } from '@reslear/capacitor-google-auth';
 
-GoogleAuth.init({
+GoogleAuth.initialize({
   client_id: 'xxxxxx-xxxxxxxxxxxxxxxxxx.apps.googleusercontent.com',
   scopes: ['profile', 'email'],
   grantOfflineAccess: true,
