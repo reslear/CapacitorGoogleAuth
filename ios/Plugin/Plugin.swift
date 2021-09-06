@@ -37,6 +37,11 @@ public class GoogleAuth: CAPPlugin {
     }
 
     @objc
+    func initialize(_ call: CAPPluginCall) {
+        call.resolve();
+    }
+
+    @objc
     func signIn(_ call: CAPPluginCall) {
         signInCall = call;
         DispatchQueue.main.async {
