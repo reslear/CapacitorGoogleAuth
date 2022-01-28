@@ -4,11 +4,6 @@ Capacitor plugin for Google Auth.
 
 > ⚠️ This is fork original plugin [@codetrix-studio/capacitor-google-auth](https://github.com/CodetrixStudio/CapacitorGoogleAuth) with new beta features, changes or experiments
 
-fork changes:
-
-- [ x ] [#114](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/114) - add support `.ts` and `.js` config
-- [ x ] [#136](https://github.com/CodetrixStudio/CapacitorGoogleAuth/pull/136) - Update ios to GoogleSignIn 6.0.1 Pod
-
 ### Install
 
 ```sh
@@ -31,7 +26,7 @@ GoogleAuth.initialize({
 });
 ```
 
-> see `init` method options - descriptions, examples, default values and types in `definition.ts`
+> see `initialize` method options - descriptions, examples, default values and types in `definition.ts`
 
 Use it
 
